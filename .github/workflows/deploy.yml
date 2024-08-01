@@ -42,7 +42,7 @@ jobs:
           
           # Ensure the directory exists
           #mkdir -p /web
-          echo "${{ steps.compose.outputs.content }}" > /web/docker-compose.yml
+          ddd=$(${{ steps.compose.outputs.content }})
 
 
 
