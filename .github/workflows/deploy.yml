@@ -46,11 +46,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Encode docker-compose.yml
-      id: encode
-      run: |
-        base64 docker-compose.yml > docker-compose.yml.b64
-        echo "::set-output name=encoded_file::$(cat docker-compose.yml.b64)"
+    - name: Read docker-compose
+      id: compose
+      uses: juliangruber/read-file-action@v1
+      with:
+        path: ./docker-compose.yml
 
     - name: Deploy to DigitalOcean
       uses: appleboy/ssh-action@v1.0.3
@@ -70,8 +70,8 @@ jobs:
           # Ensure the directory exists
           mkdir -p /web
 
-          # Decode and write the docker-compose.yml file
-          echo "${{ steps.encode.outputs.encoded_file }}" | base64 --decode > /web/docker-compose.yml
+          # Write the docker-compose.yml file
+          echo "${{ steps.compose.outputs.content  }}" > /web/docker-compose.yml
 
           # Navigate to /web and use Docker Compose
           cd /web
