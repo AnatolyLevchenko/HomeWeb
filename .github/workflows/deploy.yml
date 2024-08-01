@@ -46,11 +46,14 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Read docker-compose
-      id: compose
-      uses: juliangruber/read-file-action@v1
-      with:
-        path: ./docker-compose.yml
+    - name: Read docker-compose.yml
+      id: read_file
+      run: |
+        # Output the contents of docker-compose.yml
+        echo "Contents of docker-compose.yml:"
+        cat docker-compose.yml
+        # Set the contents as an output variable
+        echo "::set-output name=file_contents::$(cat docker-compose.yml)"
 
     - name: Deploy to DigitalOcean
       uses: appleboy/ssh-action@v1.0.3
@@ -71,7 +74,7 @@ jobs:
           mkdir -p /web
 
           # Write the docker-compose.yml file
-          echo "${{ steps.compose.outputs.content  }}" > /web/docker-compose.yml
+          echo "${{ steps.read_file.outputs.file_contents  }}" > /web/docker-compose.yml
 
           # Navigate to /web and use Docker Compose
           cd /web
