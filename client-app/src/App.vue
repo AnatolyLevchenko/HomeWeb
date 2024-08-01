@@ -18,7 +18,7 @@ export default {
     };
   },
   created() {
-    fetch('http://localhost:5000/weatherforecast')
+    fetch('http://localhost:5000/api/weatherforecast')
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
