@@ -21,7 +21,7 @@ jobs:
         docker-compose.yml
 
     - name: Read package.json
-      id: package
+      id: compose
       uses: juliangruber/read-file-action@v1
       with:
        path: docker-compose.yml
@@ -42,6 +42,8 @@ jobs:
           
           # Ensure the directory exists
           #mkdir -p /web
+
+          printf "%s" "${{ steps.compose.outputs.content }}" > /web/docker-compose.yml
 
 
 
