@@ -2,14 +2,12 @@ version: '3.8'
 
 services:
   api:
-    build:
-      context: .
+    image: purplewex/homeweb:latest
     ports:
       - "5000:8080"
 
   web:
-    build:
-      context: ./client-app
+    image: purplewex/homeweb-client:latest
     ports:
       - "5001:80"
     depends_on:
