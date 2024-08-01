@@ -67,5 +67,8 @@ jobs:
           #mkdir -p /web
           
           echo "${{ steps.read_file.outputs.file_contents }}" | base64 --decode > /web/docker-compose.yml
+          
+          cd /web
+          
           docker-compose down || true
           docker-compose up -d
