@@ -18,17 +18,17 @@ jobs:
       uses: actions/checkout@v4
       with:
        sparse-checkout: |
-        docker-compose
+        docker-compose.yml
 
-    - name: Read docker-compose.yml
-      id: read_file
-      run: |
-        # Output the contents of docker-compose.yml
-        echo "Contents of docker-compose.yml:"
-        cat docker-compose.yml
-        # Set the contents as an output variable
-        echo "::set-output name=file_contents::$(cat docker-compose.yml)"
+    - name: Read package.json
+      id: package
+      uses: juliangruber/read-file-action@v1
+      with:
+       path: .docker-compose.yml
 
+    - name: Echo package.json
+      run: echo "${{ steps.package.outputs.content }}"
+       
     - name: Deploy to DigitalOcean
       uses: appleboy/ssh-action@v1.0.3
       with:
@@ -42,8 +42,6 @@ jobs:
           
           # Ensure the directory exists
           #mkdir -p /web
-
-           echo "${{ steps.read_file.outputs.file_contents }}"
 
 
 
