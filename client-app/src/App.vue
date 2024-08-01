@@ -18,7 +18,7 @@ export default {
     };
   },
   created() {
-    fetch('/api/weatherforecast')
+    fetch('http://188.166.76.104/api/weatherforecast')
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
