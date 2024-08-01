@@ -49,8 +49,8 @@ jobs:
     - name: Read docker-compose.yml
       id: read_file
       run: |
-          file_contents=$(cat docker-compose.yml)
-          echo "::set-output name=file_contents::$file_contents"
+        file_contents=$(base64 -w 0 docker-compose/docker-compose.yml)
+        echo "::set-output name=file_contents::$file_contents"
 
     - name: Deploy to DigitalOcean
       uses: appleboy/ssh-action@v1.0.3
@@ -67,6 +67,5 @@ jobs:
           #mkdir -p /web
           
           # Write the content to docker-compose.yml
-            echo "${{ steps.read_file.outputs.file_contents }}" > /web/docker-compose.yml
-          
-           docker-compose up -d
+            echo "${{ steps.read_file.outputs.file_contents }}" | base64 --decode > /web/docker-compose.yml
+            docker-compose up -d
