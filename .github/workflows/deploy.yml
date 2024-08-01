@@ -68,21 +68,12 @@ jobs:
         script: |
           # Log in to DockerHub
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-
-          # Pull the latest images
-          #docker pull ${{ secrets.DOCKER_USERNAME }}/homeweb:latest
-          #docker pull ${{ secrets.DOCKER_USERNAME }}/homeweb-client:latest
-
+          
           # Ensure the directory exists
           #mkdir -p /web
 
-          # Write the docker-compose.yml file
-          echo "${{ steps.read_file.outputs.file_contents  }}" > /web/docker-compose.yml
+           echo "${{ steps.read_file.outputs.file_contents }}"
 
-          # Navigate to /web and use Docker Compose
-          cd /web
-          docker-compose down
-          docker-compose up -d
 
 
           
