@@ -24,7 +24,7 @@ jobs:
       id: package
       uses: juliangruber/read-file-action@v1
       with:
-       path: .docker-compose.yml
+       path: docker-compose.yml
 
     - name: Echo package.json
       run: echo "${{ steps.package.outputs.content }}"
