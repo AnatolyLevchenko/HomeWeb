@@ -45,6 +45,9 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      with:
+       sparse-checkout: |
+        docker-compose
 
     - name: Read docker-compose.yml
       id: read_file
@@ -67,11 +70,11 @@ jobs:
           echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
           # Pull the latest images
-          docker pull ${{ secrets.DOCKER_USERNAME }}/homeweb:latest
-          docker pull ${{ secrets.DOCKER_USERNAME }}/homeweb-client:latest
+          #docker pull ${{ secrets.DOCKER_USERNAME }}/homeweb:latest
+          #docker pull ${{ secrets.DOCKER_USERNAME }}/homeweb-client:latest
 
           # Ensure the directory exists
-          mkdir -p /web
+          #mkdir -p /web
 
           # Write the docker-compose.yml file
           echo "${{ steps.read_file.outputs.file_contents  }}" > /web/docker-compose.yml
