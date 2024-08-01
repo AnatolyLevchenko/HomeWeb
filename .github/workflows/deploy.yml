@@ -42,7 +42,7 @@ jobs:
           
           # Ensure the directory exists
           #mkdir -p /web
-          ddd="${{ steps.compose.outputs.content }}"
+          print "${{ steps.compose.outputs.content }}"
 
 
 
