@@ -45,14 +45,12 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      with:
-       sparse-checkout: |
-        docker-compose
 
     - name: Read docker-compose.yml
       id: read_file
       run: |
-        echo "::set-output name=file_contents::$(cat docker-compose.yml)"
+          file_contents=$(cat docker-compose.yml)
+          echo "::set-output name=file_contents::$file_contents"
 
     - name: Deploy to DigitalOcean
       uses: appleboy/ssh-action@v1.0.3
@@ -67,4 +65,8 @@ jobs:
           
           # Ensure the directory exists
           #mkdir -p /web
-          echo "${{ steps.read_file.outputs.file_contents }}" > docker-compose.yml
+          
+          # Write the content to docker-compose.yml
+            echo "${{ steps.read_file.outputs.file_contents }}" > /web/docker-compose.yml
+          
+           docker-compose up -d
