@@ -9,6 +9,6 @@ public class WeatherForecastController : ControllerBase
     [HttpGet]
     public IEnumerable<string> Get()
     {
-        return new string[] { "One","Two","Three" };
+        return new string[] { "One","Two","Three","Four","Five" };
     }
 }
